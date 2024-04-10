@@ -110,7 +110,6 @@ public abstract class AbstractMiningCoordinator<
   @Override
   public boolean mineBlock(final long newBlockTimestamp) {
     synchronized(this) {
-      System.out.println("Trying to mine from abs mining coordinator " + state.toString() + " " + isEnabled);
       if(isEnabled || state != State.RUNNING) {
         final BlockHeader parentHeader = blockchain.getChainHeadHeader();
         return this.executor.mineBlock(minedBlockObservers, ethHashObservers, parentHeader, newBlockTimestamp);
