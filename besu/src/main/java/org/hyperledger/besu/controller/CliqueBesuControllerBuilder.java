@@ -117,7 +117,12 @@ public class CliqueBesuControllerBuilder extends BesuControllerBuilder {
     miningCoordinator.addMinedBlockObserver(ethProtocolManager);
 
     // Clique mining is implicitly enabled.
-    miningCoordinator.enable();
+  /*
+   * :: satschain
+   * Turning off default mining so we can call it on api call
+   * A public method exposed by satschain organization to allow mining a block with a desired timestamp on an api call
+   */
+    //miningCoordinator.enable();
     return miningCoordinator;
   }
 
