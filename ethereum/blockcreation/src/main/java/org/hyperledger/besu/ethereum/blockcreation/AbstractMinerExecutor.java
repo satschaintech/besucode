@@ -88,11 +88,14 @@ public abstract class AbstractMinerExecutor<M extends BlockMiner<? extends Abstr
   public boolean mineBlock(final Subscribers<MinedBlockObserver> observers,
     final Subscribers<PoWObserver> ethHashObservers,
     final BlockHeader parentHeader,
-    long newBlockTimestamp) {
+    final long newBlockTimestamp) {
     try {
       final M currentRunningMiner = createMiner(observers, ethHashObservers, parentHeader);
       return currentRunningMiner.mineBlock(newBlockTimestamp);
-    } catch (RejectedExecutionException e) {
+    } catch (InterruptedException e) {
+      LOG.warn("Unable to do mine 1 block.", e);
+      return false;
+    } catch (RuntimeException e) {
       LOG.warn("Unable to do mine 1 block.", e);
       return false;
     }

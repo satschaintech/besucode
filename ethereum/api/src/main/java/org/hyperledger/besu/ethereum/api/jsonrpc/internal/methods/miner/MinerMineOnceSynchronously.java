@@ -28,14 +28,16 @@ public class MinerMineOnceSynchronously implements JsonRpcMethod {
 
   @Override
   public JsonRpcResponse response(final JsonRpcRequestContext requestContext) {
-    final boolean mined = false;
+    boolean mined = false;
     try {
-      mined = miningCoordinator.mineBlock(newBlockTimestamp);
+      Long newBlockTimestamp = requestContext.getRequiredParameter(0, Long.class);
+      System.out.println("mining for timestamp = " + newBlockTimestamp);
+      mined = this.miningCoordinator.mineBlock(newBlockTimestamp);
     } catch (final CoinbaseNotSetException e) {
       return new JsonRpcErrorResponse(
           requestContext.getRequest().getId(), RpcErrorType.COINBASE_NOT_SET);
     }
 
-    return new JsonRpcSuccessResponse(requestContext.getRequest().getId(), enabled);
+    return new JsonRpcSuccessResponse(requestContext.getRequest().getId(), mined);
   }
 }

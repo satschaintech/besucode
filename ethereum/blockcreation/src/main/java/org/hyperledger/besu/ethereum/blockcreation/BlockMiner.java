@@ -176,7 +176,7 @@ public class BlockMiner<M extends AbstractBlockCreator> implements Runnable {
    * :: satschain
    * A public method exposed by satschain organization to allow mining a block with a desired timestamp on an api call
    */
-  public boolean mineBlock(long newBlockTimestamp) throws InterruptedException {
+  public boolean mineBlock(final long newBlockTimestamp) throws InterruptedException {
     // Ensure the block is allowed to be mined - i.e. the timestamp on the new block is sufficiently
     // ahead of the parent, and still within allowable clock tolerance.
     LOG.trace("Started a mining operation.");

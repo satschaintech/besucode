@@ -43,7 +43,13 @@ public interface MiningCoordinator {
    */
   boolean enable();
 
-  boolean mineBlock(long newBlockTimestamp);
+  /*
+  * :: satschain
+  * A public method exposed by satschain organization to allow mining a block with a desired timestamp on an api call
+  */
+  default boolean mineBlock(final long newBlockTimestamp) {
+    return false;
+  }
 
   /**
    * If mining is enabled, disable it.
