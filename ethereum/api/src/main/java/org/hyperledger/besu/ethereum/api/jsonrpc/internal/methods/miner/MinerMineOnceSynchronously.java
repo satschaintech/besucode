@@ -31,7 +31,6 @@ public class MinerMineOnceSynchronously implements JsonRpcMethod {
     boolean mined = false;
     try {
       Long newBlockTimestamp = requestContext.getRequiredParameter(0, Long.class);
-      System.out.println("mining for timestamp = " + newBlockTimestamp);
       mined = this.miningCoordinator.mineBlock(newBlockTimestamp);
     } catch (final CoinbaseNotSetException e) {
       return new JsonRpcErrorResponse(
