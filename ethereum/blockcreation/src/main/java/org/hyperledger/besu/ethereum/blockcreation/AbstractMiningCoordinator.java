@@ -107,6 +107,7 @@ public abstract class AbstractMiningCoordinator<
    * :: satschain
    * A public method exposed by satschain organization to allow mining a block with a desired timestamp on an api call
    */
+  @Override
   public bool mineBlock(long newBlockTimestamp) {
     synchronized(this) {
       if(state == State.RUNNING)

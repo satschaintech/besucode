@@ -159,6 +159,7 @@ public enum RpcMethod {
   MINER_SET_MIN_PRIORITY_FEE("miner_setMinPriorityFee"),
   MINER_GET_MIN_GAS_PRICE("miner_getMinGasPrice"),
   MINER_SET_MIN_GAS_PRICE("miner_setMinGasPrice"),
+  MINER_MINE_ONCE_SYNCHRONOUSLY("miner_mineOnceSynchronously"),
   NET_ENODE("net_enode"),
   NET_LISTENING("net_listening"),
   NET_PEER_COUNT("net_peerCount"),

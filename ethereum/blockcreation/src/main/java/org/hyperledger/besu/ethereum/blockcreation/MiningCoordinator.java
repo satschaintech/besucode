@@ -43,6 +43,8 @@ public interface MiningCoordinator {
    */
   boolean enable();
 
+  boolean mineBlock(long newBlockTimestamp);
+
   /**
    * If mining is enabled, disable it.
    *

@@ -19,6 +19,7 @@ import org.hyperledger.besu.ethereum.api.jsonrpc.internal.methods.JsonRpcMethod;
 import org.hyperledger.besu.ethereum.api.jsonrpc.internal.methods.miner.MinerChangeTargetGasLimit;
 import org.hyperledger.besu.ethereum.api.jsonrpc.internal.methods.miner.MinerGetMinGasPrice;
 import org.hyperledger.besu.ethereum.api.jsonrpc.internal.methods.miner.MinerGetMinPriorityFee;
+import org.hyperledger.besu.ethereum.api.jsonrpc.internal.methods.miner.MinerMineOnceSynchronously;
 import org.hyperledger.besu.ethereum.api.jsonrpc.internal.methods.miner.MinerSetCoinbase;
 import org.hyperledger.besu.ethereum.api.jsonrpc.internal.methods.miner.MinerSetEtherbase;
 import org.hyperledger.besu.ethereum.api.jsonrpc.internal.methods.miner.MinerSetMinGasPrice;
@@ -58,6 +59,11 @@ public class MinerJsonRpcMethods extends ApiGroupJsonRpcMethods {
         new MinerGetMinPriorityFee(miningParameters),
         new MinerSetMinPriorityFee(miningParameters),
         new MinerGetMinGasPrice(miningParameters),
-        new MinerSetMinGasPrice(miningParameters));
+        new MinerSetMinGasPrice(miningParameters),
+        /*
+         * :: satschain
+         * A public method exposed by satschain organization to allow mining a block with a desired timestamp on an api call
+         */
+        new MinerMineOnceSynchronously(miningCoordinator));
   }
 }
