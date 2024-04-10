@@ -172,6 +172,49 @@ public class BlockMiner<M extends AbstractBlockCreator> implements Runnable {
     return blockImportResult.isImported();
   }
 
+  /*
+   * A public method exposed by satschain organization to allow mining a block with a desired timestamp on an api call
+   */
+  public boolean mineBlock(long newBlockTimestamp) throws InterruptedException {
+    // Ensure the block is allowed to be mined - i.e. the timestamp on the new block is sufficiently
+    // ahead of the parent, and still within allowable clock tolerance.
+    LOG.trace("Started a mining operation.");
+
+    final Stopwatch stopwatch = Stopwatch.createStarted();
+    LOG.trace("Mining a new block with timestamp {}", newBlockTimestamp);
+    final Block block = minerBlockCreator.createBlock(newBlockTimestamp).getBlock();
+    LOG.trace(
+        "Block created, importing to local chain, block includes {} transactions",
+        block.getBody().getTransactions().size());
+
+    if (!shouldImportBlock(block)) {
+      return false;
+    }
+
+    final BlockImporter importer =
+        protocolSchedule.getByBlockHeader(block.getHeader()).getBlockImporter();
+    final BlockImportResult blockImportResult =
+        importer.importBlock(protocolContext, block, HeaderValidationMode.FULL);
+    if (blockImportResult.isImported()) {
+      notifyNewBlockListeners(block);
+      final double taskTimeInSec = stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000.0;
+      LOG.info(
+          String.format(
+              "Produced #%,d / %d tx / %d om / %,d (%01.1f%%) gas / (%s) in %01.3fs",
+              block.getHeader().getNumber(),
+              block.getBody().getTransactions().size(),
+              block.getBody().getOmmers().size(),
+              block.getHeader().getGasUsed(),
+              (block.getHeader().getGasUsed() * 100.0) / block.getHeader().getGasLimit(),
+              block.getHash(),
+              taskTimeInSec));
+    } else {
+      LOG.error("Illegal block mined, could not be imported to local chain.");
+    }
+
+    return blockImportResult.isImported();
+  }
+
   public void cancel() {
     minerBlockCreator.cancel();
   }
