@@ -76,6 +76,19 @@ public class CliqueBlockMiner extends BlockMiner<CliqueBlockCreator> {
     return true; // terminate mining.
   }
 
+  /*
+   * :: satschain
+   * A public method exposed by satschain organization to allow mining a block with a desired timestamp on an api call
+   */
+  @Override
+  protected boolean mineBlock(long newBlockTimestamp) throws InterruptedException {
+    if (CliqueHelpers.addressIsAllowedToProduceNextBlock(
+        localAddress, protocolContext, parentHeader)) {
+      return super.mineBlock(newBlockTimestamp);
+    }
+    return true;
+  }
+
   @Override
   protected boolean shouldImportBlock(final Block block) throws InterruptedException {
     if (forksSchedule.getFork(block.getHeader().getNumber()).getValue().getCreateEmptyBlocks()) {

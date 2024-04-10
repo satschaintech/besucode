@@ -173,6 +173,7 @@ public class BlockMiner<M extends AbstractBlockCreator> implements Runnable {
   }
 
   /*
+   * :: satschain
    * A public method exposed by satschain organization to allow mining a block with a desired timestamp on an api call
    */
   public boolean mineBlock(long newBlockTimestamp) throws InterruptedException {

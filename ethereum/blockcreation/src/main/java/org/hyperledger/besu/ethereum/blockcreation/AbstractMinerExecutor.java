@@ -81,6 +81,23 @@ public abstract class AbstractMinerExecutor<M extends BlockMiner<? extends Abstr
     }
   }
 
+  /*
+   * :: satschain
+   * A public method exposed by satschain organization to allow mining a block with a desired timestamp on an api call
+   */
+  public boolean mineBlock(final Subscribers<MinedBlockObserver> observers,
+    final Subscribers<PoWObserver> ethHashObservers,
+    final BlockHeader parentHeader,
+    long newBlockTimestamp) {
+    try {
+      final M currentRunningMiner = createMiner(observers, ethHashObservers, parentHeader);
+      return currentRunningMiner.mineBlock(newBlockTimestamp);
+    } catch (RejectedExecutionException e) {
+      LOG.warn("Unable to do mine 1 block.", e);
+      return false;
+    }
+  }
+
   public void shutDown() {
     if (stopped.compareAndSet(false, true)) {
       executorService.shutdownNow();

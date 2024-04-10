@@ -103,6 +103,19 @@ public abstract class AbstractMiningCoordinator<
     }
   }
 
+  /*
+   * :: satschain
+   * A public method exposed by satschain organization to allow mining a block with a desired timestamp on an api call
+   */
+  public bool mineBlock(long newBlockTimestamp) {
+    synchronized(this) {
+      if(state == State.RUNNING)
+        return false;
+      final BlockHeader parentHeader = blockchain.getChainHeadHeader();
+      return this.executor.mineBlock(minedBlockObservers, ethHashObservers, parentHeader, newBlockTimestamp);
+    }
+  }
+
   @Override
   public void awaitStop() throws InterruptedException {
     executor.awaitShutdown();
