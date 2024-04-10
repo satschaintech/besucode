@@ -110,10 +110,13 @@ public abstract class AbstractMiningCoordinator<
   @Override
   public boolean mineBlock(final long newBlockTimestamp) {
     synchronized(this) {
-      System.out.println("Trying to mine from abs mining coordinator " + state.toString());
-      final BlockHeader parentHeader = blockchain.getChainHeadHeader();
-      return this.executor.mineBlock(minedBlockObservers, ethHashObservers, parentHeader, newBlockTimestamp);
+      System.out.println("Trying to mine from abs mining coordinator " + state.toString() + " " + isEnabled);
+      if(isEnabled || state != State.RUNNING) {
+        final BlockHeader parentHeader = blockchain.getChainHeadHeader();
+        return this.executor.mineBlock(minedBlockObservers, ethHashObservers, parentHeader, newBlockTimestamp);
+      }
     }
+    return false;
   }
 
   @Override
@@ -130,6 +133,7 @@ public abstract class AbstractMiningCoordinator<
       isEnabled = true;
       remineOnNewHeadListenerId.set(Optional.of(blockchain.observeBlockAdded(this)));
       /*
+       * :: satschain
        * For satschain, we may enable the miningcoordinator, but that does not start mining
        */
       //startMiningIfPossible();

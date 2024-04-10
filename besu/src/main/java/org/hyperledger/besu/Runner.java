@@ -169,7 +169,11 @@ public class Runner implements AutoCloseable {
       if (networkRunner.getNetwork().isP2pEnabled()) {
         besuController.getSynchronizer().start();
       }
-      besuController.getMiningCoordinator().start();
+      /*
+       * :: satschain
+       * A statschain requirement to not start the miner by default
+       */
+      // besuController.getMiningCoordinator().start();
       transactionPoolEvictionService.start();
 
       LOG.info("Ethereum main loop is up.");
