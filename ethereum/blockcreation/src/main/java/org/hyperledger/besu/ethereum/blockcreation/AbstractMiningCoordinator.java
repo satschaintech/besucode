@@ -110,7 +110,7 @@ public abstract class AbstractMiningCoordinator<
   @Override
   public boolean mineBlock(final long newBlockTimestamp) {
     synchronized(this) {
-      if(isEnabled || state != State.RUNNING) {
+      if(isEnabled && state != State.RUNNING) {
         final BlockHeader parentHeader = blockchain.getChainHeadHeader();
         return this.executor.mineBlock(minedBlockObservers, ethHashObservers, parentHeader, newBlockTimestamp);
       }
