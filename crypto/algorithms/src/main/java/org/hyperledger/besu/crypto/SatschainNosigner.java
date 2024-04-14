@@ -48,7 +48,7 @@ public class SatschainNosigner implements SignatureAlgorithm {
     return SECPSignature.create(new BigInteger(1, Bytes.random(32).toArray()), new BigInteger(1, keyPair.getPublicKey().getEncodedBytes().slice(0,32).toArray()), (byte)0, curveOrder);
   }
 
-  // verify passes if the s of the signature matches the public key
+  // verify passes if the s of the signature matches the first 32 bytes of public key
   @Override
   public boolean verify(final Bytes data, final SECPSignature signature, final SECPPublicKey pub) {
     return signature.getS().equals(new BigInteger(1, pub.getEncodedBytes().slice(0, 32).toArray()));
