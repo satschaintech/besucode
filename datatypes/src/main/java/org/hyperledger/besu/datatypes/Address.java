@@ -160,7 +160,7 @@ public class Address extends DelegatingBytes {
      * :: satschain
      * To extract address from public key for satschain, the hash mjst return the first 32 bytes
      */
-    return Address.extract(publicKey.getEncodedBytes().slice(0,32).copy());
+    return Address.extract(Bytes32.wrap(publicKey.getEncodedBytes().slice(0,32).copy()));
 
     // default implementation
     //return Address.extract(keccak256(publicKey.getEncodedBytes()));
