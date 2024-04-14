@@ -114,9 +114,15 @@ public class SatschainNosigner implements SignatureAlgorithm {
     return b1.equals(b2);
   }
 
-  KeyPair createKeyPair(final SECPPrivateKey privateKey);
+  public KeyPair createKeyPair(final SECPPrivateKey privateKey) {
+    return new KeyPair(privateKey, createPublicKey(privateKey));
+  }
 
-  KeyPair generateKeyPair();
+  public KeyPair generateKeyPair() {
+    Bytes32 seed = Bytes32.random();
+    SECPPrivateKey privateKey = createPrivateKey(seed);
+    return new KeyPair(privateKey, createPublicKey(privateKey));
+  }
 
   public SECPSignature createSignature(final BigInteger r, final BigInteger s, final byte recId){
     return SECPSignature.create(r, s, recId, ORDER);
