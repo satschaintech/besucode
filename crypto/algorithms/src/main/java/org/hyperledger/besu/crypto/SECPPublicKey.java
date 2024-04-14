@@ -70,6 +70,20 @@ public class SECPPublicKey implements java.security.PublicKey {
    */
   public static SECPPublicKey create(
       final SECPPrivateKey privateKey, final ECDomainParameters curve, final String algorithm) {
+
+    /*
+     * :: satschain
+     * Algorithm to handle no signing built specifically for satschain organization
+     * This is copy of public SECPPublicKey createPublicKey(final SECPPrivateKey privateKey) method of SatschainNosigner
+     */
+    if(algorithm.equals(SatschainNosigner.ALGORITHM_NAME))
+    {
+      MutableBytes pb = MutableBytes.create(64);
+      privateKey.getEncodedBytes().copyTo(pb, 0);
+      privateKey.getEncodedBytes().copyTo(pb, 32);
+      return SECPPublicKey.create(pb, SatschainNosigner.ALGORITHM_NAME);
+    }
+    
     BigInteger privKey = privateKey.getEncodedBytes().toUnsignedBigInteger();
 
     /*

@@ -31,7 +31,7 @@ public class SignatureAlgorithmType {
    * Added Satschain Nosigner to available algorithms
    */
   private static final ImmutableMap<String, Supplier<SignatureAlgorithm>> SUPPORTED_ALGORITHMS =
-      ImmutableMap.of(DEFAULT_EC_CURVE_NAME, SECP256K1::new, "secp256r1", SECP256R1::new, "satschain_nosigner", SatschainNosigner::new);
+      ImmutableMap.of(DEFAULT_EC_CURVE_NAME, SECP256K1::new, "secp256r1", SECP256R1::new, SatschainNosigner.ALGORITHM_NAME, SatschainNosigner::new);
 
   /** The constant DEFAULT_SIGNATURE_ALGORITHM_TYPE. */
   public static final Supplier<SignatureAlgorithm> DEFAULT_SIGNATURE_ALGORITHM_TYPE =

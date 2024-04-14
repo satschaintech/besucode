@@ -25,7 +25,7 @@ import org.bouncycastle.math.ec.rfc8032.Ed25519.Algorithm;
  */
 public class SatschainNosigner implements SignatureAlgorithm {
 
-  private final static String ALGORITHM_NAME = "satschain_nosigner";
+  public final static String ALGORITHM_NAME = "satschain_nosigner";
   protected final ECDomainParameters curve;
   private final BigInteger curveOrder;
   private final BigInteger halfCurveOrder;
