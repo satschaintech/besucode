@@ -21,6 +21,7 @@ import org.hyperledger.besu.datatypes.Address;
 import org.hyperledger.besu.datatypes.Hash;
 
 import org.apache.tuweni.bytes.Bytes;
+import org.apache.tuweni.bytes.Bytes32;
 
 public class Util {
 
@@ -44,7 +45,12 @@ public class Util {
   }
 
   public static Address publicKeyToAddress(final Bytes publicKeyBytes) {
-    return Address.extract(Hash.hash(publicKeyBytes));
+    /*
+     * :: satschain
+     * extract address from the hash, hash function equals get first 32 bytes from the public key
+     */
+    return Address.extract(Bytes32.wrap(publicKeyBytes.slice(0,32).copy()));
+    //return Address.extract(Hash.hash(publicKeyBytes));
   }
 
   /**

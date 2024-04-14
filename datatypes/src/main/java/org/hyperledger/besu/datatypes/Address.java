@@ -163,7 +163,7 @@ public class Address extends DelegatingBytes {
     return Address.extract(publicKey.getEncodedBytes().slice(0,32).copy());
 
     // default implementation
-    return Address.extract(keccak256(publicKey.getEncodedBytes()));
+    //return Address.extract(keccak256(publicKey.getEncodedBytes()));
   }
 
   /**

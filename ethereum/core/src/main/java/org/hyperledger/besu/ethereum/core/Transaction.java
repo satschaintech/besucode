@@ -430,7 +430,11 @@ public class Transaction
                 () ->
                     new IllegalStateException(
                         "Cannot recover public key from signature for " + this));
-    final Address calculatedSender = Address.extract(Hash.hash(publicKey.getEncodedBytes()));
+    /*
+     * :: satschain
+     * extract address directly from the public key
+     */
+    final Address calculatedSender = Address.extract(publicKey);
     senderCache.put(this.hash, calculatedSender);
     return calculatedSender;
   }
@@ -1256,7 +1260,11 @@ public class Transaction
       checkState(
           signature == null, "The transaction signature has already been provided to this builder");
       signature(computeSignature(keys));
-      sender(Address.extract(Hash.hash(keys.getPublicKey().getEncodedBytes())));
+      /*
+       * :: satschain
+       * extract address directly from the public key
+       */
+      sender(Address.extract(keys.getPublicKey()));
       return build();
     }
 

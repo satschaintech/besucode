@@ -424,7 +424,11 @@ public class PrivateTransaction implements org.hyperledger.besu.plugin.data.Priv
                   () ->
                       new IllegalStateException(
                           "Cannot recover public key from signature for " + this));
-      sender = Address.extract(Hash.hash(publicKey.getEncodedBytes()));
+      /*
+       * :: satschain
+       * extract address firectly from the public key
+       */
+      sender = Address.extract(publicKey);
     }
     return sender;
   }
@@ -767,7 +771,11 @@ public class PrivateTransaction implements org.hyperledger.besu.plugin.data.Priv
       checkState(
           signature == null, "The transaction signature has already been provided to this builder");
       signature(computeSignature(keys));
-      sender(Address.extract(Hash.hash(keys.getPublicKey().getEncodedBytes())));
+      /*
+       * :: satschain
+       * extract address firectly from the public key
+       */
+      sender(Address.extract(keys.getPublicKey()));
       return build();
     }
 
