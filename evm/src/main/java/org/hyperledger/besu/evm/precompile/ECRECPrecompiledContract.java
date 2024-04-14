@@ -99,7 +99,13 @@ public class ECRECPrecompiledContract extends AbstractPrecompiledContract {
         return PrecompileContractResult.success(Bytes.EMPTY);
       }
 
-      final Bytes32 hashed = Hash.keccak256(recovered.get().getEncodedBytes());
+      /*
+       * :: satschain
+       * address calculation logic modification
+       */
+      // below line is default implementation, we replace it with satschain specific implementation
+      // final Bytes32 hashed = Hash.keccak256(recovered.get().getEncodedBytes());
+      final Bytes32 hashed = Bytes32.wrap(recovered.get().getEncodedBytes().slice(0, 32)).copy();
       final MutableBytes32 result = MutableBytes32.create();
       hashed.slice(12).copyTo(result, 12);
       return PrecompileContractResult.success(result);
