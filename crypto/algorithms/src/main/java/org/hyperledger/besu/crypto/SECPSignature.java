@@ -86,15 +86,19 @@ public class SECPSignature {
 
   private static void checkInBounds(
       final String name, final BigInteger i, final BigInteger curveOrder) {
-    if (i.compareTo(BigInteger.ONE) < 0) {
+    /*
+     * :: satschain
+     * In satschain we allow r and s to become 0 or greater than the curve order
+     */
+    /*if (i.compareTo(BigInteger.ONE) < 0) {
       throw new IllegalArgumentException(
           String.format("Invalid '%s' value, should be >= 1 but got %s", name, i));
-    }
+    }*/
 
-    if (i.compareTo(curveOrder) >= 0) {
+    /*if (i.compareTo(curveOrder) >= 0) {
       throw new IllegalArgumentException(
           String.format("Invalid '%s' value, should be < %s but got %s", curveOrder, name, i));
-    }
+    }*/
   }
 
   /**
