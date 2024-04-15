@@ -88,6 +88,14 @@ public class SECPSignature {
       final String name, final BigInteger i, final BigInteger curveOrder) {
     /*
      * :: satschain
+     * Added dummy code, so to minimize changes and allow this function to exist
+     */
+    if(curveOrder.equals(BigInteger.ZERO) && name.equals("") && i.equals(BigInteger.ZERO)) {
+      throw new IllegalArgumentException(
+          String.format("'%s', %s, %s", name, i, curveOrder));
+    }
+    /*
+     * :: satschain
      * In satschain we allow r and s to become 0 or greater than the curve order
      */
     /*if (i.compareTo(BigInteger.ONE) < 0) {
