@@ -28,6 +28,7 @@ import org.hyperledger.besu.ethereum.eth.transactions.layered.EndLayer;
 import org.hyperledger.besu.ethereum.eth.transactions.layered.GasPricePrioritizedTransactions;
 import org.hyperledger.besu.ethereum.eth.transactions.layered.LayeredPendingTransactions;
 import org.hyperledger.besu.ethereum.eth.transactions.layered.ReadyTransactions;
+import org.hyperledger.besu.ethereum.eth.transactions.layered.SatschainROfSignaturePrioritizedTransactions;
 import org.hyperledger.besu.ethereum.eth.transactions.layered.SparseTransactions;
 import org.hyperledger.besu.ethereum.eth.transactions.sorter.AbstractPendingTransactionsSorter;
 import org.hyperledger.besu.ethereum.eth.transactions.sorter.BaseFeePendingTransactionsSorter;
@@ -242,6 +243,12 @@ public class TransactionPoolFactory {
         protocolSchedule.anyMatch(
             scheduledSpec -> scheduledSpec.spec().getFeeMarket().implementsBaseFee());
 
+    /*
+     * :: satschain
+     * use this boolean flag to use SatschainROfSignaturePrioritizedTransactions for prioritizing transactions
+     */
+    boolean useSatschainRValuePrioritizer = true;
+
     if (transactionPoolConfiguration.getTxPoolImplementation().equals(LAYERED)) {
       return createLayeredPendingTransactions(
           protocolSchedule,
@@ -249,6 +256,7 @@ public class TransactionPoolFactory {
           metrics,
           transactionPoolConfiguration,
           isFeeMarketImplementBaseFee,
+          useSatschainRValuePrioritizer,
           blobCache,
           miningParameters);
     } else {
@@ -288,6 +296,7 @@ public class TransactionPoolFactory {
       final TransactionPoolMetrics metrics,
       final TransactionPoolConfiguration transactionPoolConfiguration,
       final boolean isFeeMarketImplementBaseFee,
+      final boolean useSatschainRValuePrioritizer,
       final BlobCache blobCache,
       final MiningParameters miningParameters) {
 
@@ -320,7 +329,21 @@ public class TransactionPoolFactory {
             blobCache);
 
     final AbstractPrioritizedTransactions pendingTransactionsSorter;
-    if (isFeeMarketImplementBaseFee) {
+    /*
+     * :: satschain
+     * Custom implementation of AbstractPrioritizedTransactions to process transactions in the order of their increasing R values
+     */
+    if(useSatschainRValuePrioritizer) {
+      pendingTransactionsSorter =
+          new SatschainROfSignaturePrioritizedTransactions(
+              transactionPoolConfiguration,
+              readyTransactions,
+              metrics,
+              transactionReplacementTester,
+              blobCache,
+              miningParameters);
+    }
+    else if (isFeeMarketImplementBaseFee) {
       final FeeMarket feeMarket =
           protocolSchedule
               .getByBlockHeader(protocolContext.getBlockchain().getChainHeadHeader())
