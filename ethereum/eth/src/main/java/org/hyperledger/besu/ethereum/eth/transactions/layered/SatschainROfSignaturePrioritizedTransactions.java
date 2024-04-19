@@ -1,5 +1,6 @@
 package org.hyperledger.besu.ethereum.eth.transactions.layered;
 
+import java.math.BigInteger;
 import java.util.Comparator;
 import java.util.function.BiFunction;
 
@@ -36,11 +37,11 @@ protected int compareByFee(final PendingTransaction pt1, final PendingTransactio
         /*
          * :: satschain
          * Everything remains same as GasPricePrioritizedTransactions,
-         * except for the comparison done below using the R field of the signature
+         * except for the comparison done below using the R field of the signature (comparison is reversed)
          */
-      .thenComparing(pt -> {
+      .thenComparing(Comparator.<PendingTransaction, BigInteger>comparing((PendingTransaction pt) -> {
         return pt.getTransaction().getSignature().getR();
-      })
+      }).reversed())
       .thenComparing(PendingTransaction::getSequence)
       .compare(pt1, pt2);
 }
