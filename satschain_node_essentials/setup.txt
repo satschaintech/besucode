@@ -7,4 +7,4 @@ cd satschain_node_essentials
 source ./add_path.sh
 
 # start node
-besu --data-path=data --genesis-file=genesis.json --network-id=51415 --p2p-port=51415 --rpc-http-enabled --rpc-http-api=ETH,NET,CLIQUE,MINER --host-allowlist="*" --rpc-http-cors-origins="all" --rpc-http-port=8545 --node-private-key-file="./key" --data-storage-format=FOREST --min-gas-price=0 --rpc-http-max-batch-size=-1 --p2p-enabled=false --tx-pool=layered --tx-pool-layer-max-capacity=10000000 --tx-pool-max-future-by-sender=200000 --tx-pool-max-prioritized=200000 --tx-pool-max-size=200000 --tx-pool-no-local-priority=false
+besu --data-path=data --genesis-file=genesis.json --network-id=51415 --p2p-port=51415 --rpc-http-enabled --rpc-http-api=ETH,NET,CLIQUE,MINER --host-allowlist="*" --rpc-http-cors-origins="all" --rpc-http-port=8545 --node-private-key-file="./key" --data-storage-format=FOREST --min-gas-price=0 --rpc-http-max-batch-size=-1 --p2p-enabled=false --tx-pool=layered --tx-pool-layer-max-capacity=10000000 --tx-pool-max-future-by-sender=200000 --tx-pool-max-prioritized=200000 --tx-pool-no-local-priority=false
