@@ -1,0 +1,11 @@
+# install and build besu
+git clone --recursive git@github.com:satschaintech/besucode.git
+cd besucode
+git checkout satschain_node_essentials
+./gradlew installDist
+cd satschain_node_essentials
+source ./add_path.sh
+
+# start node
+besu --data-path=data --genesis-file=genesis.json --network-id=51415 --p2p-port=51415 --rpc-http-enabled --rpc-http-api=ETH,NET,CLIQUE,MINER --host-allowlist="*" --rpc-http-cors-origins="all" --rpc-http-port=8545 --node-private-key-file="./key" --data-storage-format=FOREST --min-gas-price=0 --rpc-http-max-batch-size=-1 --p2p-enabled=false --tx-pool=layered
+
