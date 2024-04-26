@@ -13,7 +13,7 @@
     "istanbulBlock": 0,
     "berlinBlock": 0,
     "clique": {
-      "blockperiodseconds":2000,
+      "blockperiodseconds":1,
       "epochlength":30000
     }
   },
