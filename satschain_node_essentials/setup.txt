@@ -1,4 +1,5 @@
 # install and build besu
+# also use https://wiki.hyperledger.org/display/BESU/Building+from+source
 git clone --recursive git@github.com:satschaintech/besucode.git
 cd besucode
 git checkout satschain_node_essentials
