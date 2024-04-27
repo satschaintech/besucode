@@ -20,14 +20,20 @@ import org.immutables.value.Value;
 @Value.Style(allParameters = true)
 public interface TransactionValidationParams {
 
+  /*
+   * :: satschain
+   * removing checks to allow transactions exceeding balance
+   * this was false on all TransactionValidationParams
+   */
+
   TransactionValidationParams processingBlockParams =
       ImmutableTransactionValidationParams.of(false, false, false, true, false, false);
 
   TransactionValidationParams transactionPoolParams =
-      ImmutableTransactionValidationParams.of(true, false, true, true, true, false);
+      ImmutableTransactionValidationParams.of(true, true, true, true, true, false);
 
   TransactionValidationParams miningParams =
-      ImmutableTransactionValidationParams.of(false, false, false, true, true, false);
+      ImmutableTransactionValidationParams.of(false, true, false, true, true, false);
 
   TransactionValidationParams blockReplayParams =
       ImmutableTransactionValidationParams.of(false, false, false, false, false, false);

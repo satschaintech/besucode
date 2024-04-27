@@ -223,9 +223,14 @@ public class MainnetTransactionValidator implements TransactionValidator {
       if (sender.getCodeHash() != null) codeHash = sender.getCodeHash();
     }
 
+    /*
+     * :: satschain
+     * added check to allowExceedingBalance if possible
+     * A feature left out by besu but included by satschain
+     */
     final Wei upfrontCost =
         transaction.getUpfrontCost(gasCalculator.blobGasCost(transaction.getBlobCount()));
-    if (upfrontCost.compareTo(senderBalance) > 0) {
+    if (!validationParams.isAllowExceedingBalance() && upfrontCost.compareTo(senderBalance) > 0) {
       return ValidationResult.invalid(
           TransactionInvalidReason.UPFRONT_COST_EXCEEDS_BALANCE,
           String.format(
