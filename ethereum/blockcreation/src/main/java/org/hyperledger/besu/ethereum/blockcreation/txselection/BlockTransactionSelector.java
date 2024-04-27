@@ -180,6 +180,14 @@ public class BlockTransactionSelector {
                     .selectTransactions(this::evaluateTransaction));
 
     try {
+      /*
+       * :: satschain
+       * We need to customize the blockTxsSelectionMaxTime for satschain,
+       * since we will be following the BTC chain, we need it to be equal to time between any 2 BTC blocks
+       * We override this with a local variable, to incur minimum change.
+       * For now we are setting it to 15 minutes = 15 * 60 * 1000 milliseconds
+       */
+      long blockTxsSelectionMaxTime = 15 * 60 * 1000;
       txSelection.get(blockTxsSelectionMaxTime, TimeUnit.MILLISECONDS);
     } catch (InterruptedException | ExecutionException e) {
       if (isCancelled.get()) {
