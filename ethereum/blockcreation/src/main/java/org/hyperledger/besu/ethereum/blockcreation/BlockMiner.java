@@ -176,7 +176,7 @@ public class BlockMiner<M extends AbstractBlockCreator> implements Runnable {
    * :: satschain
    * A public method exposed by satschain organization to allow mining a block with a desired timestamp on an api call
    */
-  public boolean mineBlock(final long newBlockTimestamp) throws InterruptedException {
+  public boolean mineBlock(final long newBlockTimestampSuggestion) throws InterruptedException {
     // Ensure the block is allowed to be mined - i.e. the timestamp on the new block is sufficiently
     // ahead of the parent, and still within allowable clock tolerance.
     LOG.trace("Started a mining operation.");
@@ -187,7 +187,7 @@ public class BlockMiner<M extends AbstractBlockCreator> implements Runnable {
      * We have genesis blockperiodseconds = 1, hence each block must be atleast 1 second after the previous block timestamp
      * This 1 second is also default for ethereum.
      */
-    newBlockTimestamp = max(newBlockTimestamp, this.parentHeader.getTimestamp() + 1);
+    long newBlockTimestamp = Long.max(newBlockTimestampSuggestion, this.parentHeader.getTimestamp()+1);
     LOG.trace("Mining a new block with timestamp {}", newBlockTimestamp);
     final Block block = minerBlockCreator.createBlock(newBlockTimestamp).getBlock();
     LOG.trace(
