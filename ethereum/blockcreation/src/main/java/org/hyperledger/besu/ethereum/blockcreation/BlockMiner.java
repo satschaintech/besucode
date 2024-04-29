@@ -182,6 +182,12 @@ public class BlockMiner<M extends AbstractBlockCreator> implements Runnable {
     LOG.trace("Started a mining operation.");
 
     final Stopwatch stopwatch = Stopwatch.createStarted();
+    /*
+     * :: satschain
+     * We have genesis blockperiodseconds = 1, hence each block must be atleast 1 second after the previous block timestamp
+     * This 1 second is also default for ethereum.
+     */
+    newBlockTimestamp = max(newBlockTimestamp, this.parentHeader.getTimestamp() + 1);
     LOG.trace("Mining a new block with timestamp {}", newBlockTimestamp);
     final Block block = minerBlockCreator.createBlock(newBlockTimestamp).getBlock();
     LOG.trace(
