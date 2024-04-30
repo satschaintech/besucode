@@ -57,7 +57,7 @@ def send_web3_request(method, params) :
     })
     request_id += 1
     return resp.text
-'''
+
 tx = get_raw_transaction(chain_id=51415, nonce=1, gas_limit=0x21000, to_addr=0x01, value=0x200000, data=b"", record_no=3, from_addr=0x02)
 print(tx)
 r1 = send_web3_request("eth_sendRawTransaction", [tx])
@@ -79,25 +79,4 @@ r1 = send_web3_request("eth_sendRawTransaction", [tx])
 print(r1)
 
 r2 = send_web3_request("miner_mineOnceSynchronously", [0x123])
-print(r2)
-
-tx = get_raw_transaction(chain_id=51415, nonce=1, gas_limit=0x21000, to_addr=0x03, value=0x100000, data=b"", record_no=4, from_addr=0x01)
-print(tx)
-r1 = send_web3_request("eth_sendRawTransaction", [tx])
-print(r1)'''
-
-tx = get_raw_transaction(chain_id=51415, nonce=0, gas_limit=0x21000, to_addr=0xffffffffffffffffffffffffffffffffffffffff, value=0x300000, data=b"", record_no=1, from_addr=0x01)
-print(tx)
-r1 = send_web3_request("eth_sendRawTransaction", [tx])
-print(r1)
-
-#r2 = send_web3_request("miner_mineOnceSynchronously", [0x123])
-#print(r2)
-
-tx = get_raw_transaction(chain_id=51415, nonce=0, gas_limit=0x21000, to_addr=0x01, value=0x200000, data=b"", record_no=2, from_addr=0xffffffffffffffffffffffffffffffffffffffff)
-print(tx)
-r1 = send_web3_request("eth_sendRawTransaction", [tx])
-print(r1)
-
-r2 = send_web3_request("miner_mineOnceSynchronously", [0x456])
 print(r2)
