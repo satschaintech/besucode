@@ -61,6 +61,9 @@ def send_web3_request(method, params) :
     request_id += 1
     return resp.text
 
+r1 = send_web3_request("txpool_clear", [])
+print(r1)
+
 tx = get_raw_transaction(chain_id=51415, nonce=1, gas_limit=0x21000, to_addr=0x1a45e15830052d4c441f466c4d1d92a878aa2aa5, value=0x200000, data=b"", record_no=3, from_addr=0xbc936ceba516e86ace90c087eb702ff064e6c73d)
 print(tx)
 r1 = send_web3_request("eth_sendRawTransaction", [tx])
@@ -81,5 +84,8 @@ print(tx)
 r1 = send_web3_request("eth_sendRawTransaction", [tx])
 print(r1)
 
-r2 = send_web3_request("miner_mineBulkSynchronously", [0x123, 100000])
-print(r2)
+r1 = send_web3_request("txpool_clear", [])
+print(r1)
+
+r1 = send_web3_request("miner_mineBulkSynchronously", [0x123, 1])
+print(r1)
