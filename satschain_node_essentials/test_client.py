@@ -90,3 +90,18 @@ print(r1)
 '''
 r1 = send_web3_request("miner_mineBulkSynchronously", [0x123, 3])
 print(r1)
+
+r1 = send_web3_request("eth_blockNumber", [])
+print(r1)
+
+r1 = send_web3_request("debug_setHead", ["0x1"])
+print(r1)
+
+r1 = send_web3_request("eth_blockNumber", [])
+print(r1)
+
+r1 = send_web3_request("miner_mineOnceSynchronously", [0x123])
+print(r1)
+
+r1 = send_web3_request("eth_blockNumber", [])
+print(r1)
