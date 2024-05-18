@@ -87,5 +87,5 @@ print(r1)
 r1 = send_web3_request("txpool_clear", [])
 print(r1)
 
-r1 = send_web3_request("miner_mineBulkSynchronously", [0x123, 1])
+r1 = send_web3_request("miner_mineBulkSynchronously", [0x123, 3])
 print(r1)
