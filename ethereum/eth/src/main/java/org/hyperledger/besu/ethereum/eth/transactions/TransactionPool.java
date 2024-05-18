@@ -796,4 +796,12 @@ public class TransactionPool implements BlockAddedObserver {
       }
     }
   }
+
+  /*
+   * :: satschain
+   * Need this functionality to clear all pending transactions from transaction pool, before mining a new block
+   */
+  public void reset() {
+    pendingTransactions.reset();
+  }
 }
