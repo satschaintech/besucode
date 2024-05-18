@@ -32,7 +32,10 @@ def get_raw_transaction(chain_id, nonce, gas_limit, to_addr, value, data, record
     nonce = to_integer(nonce)
     gas_price = to_integer(0)
     gas_limit = to_integer(gas_limit)
-    to_addr = to_integer_bytes(to_addr, 20)
+    if(to_addr == None) :
+        to_addr = b''
+    else:
+        to_addr = to_integer_bytes(to_addr, 20)
     value = to_integer(value)
     data = to_binary(data)
     record_no = to_integer(record_no)
