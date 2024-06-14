@@ -91,7 +91,12 @@ public class BlockHeaderValidationRulesetFactory {
     final BlockHeaderValidator.Builder builder =
         new BlockHeaderValidator.Builder()
             .addRule(new AncestryValidationRule())
-            .addRule(new TimestampBoundedByFutureParameter(10))
+            /*
+             * :: satschain
+             * originally besu allowed mined blocks to be only atmost 10 second in future
+             * for satchain we have increased this limit to 2 hours i.e. 2 * 60 * 60 seconds
+             */
+            .addRule(new TimestampBoundedByFutureParameter(2 * 60 * 60))
             .addRule(
                 new GasLimitRangeAndDeltaValidationRule(
                     DEFAULT_MIN_GAS_LIMIT, DEFAULT_MAX_GAS_LIMIT, baseFeeMarket))
